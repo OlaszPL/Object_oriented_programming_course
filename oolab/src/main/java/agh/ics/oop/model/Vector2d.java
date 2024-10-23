@@ -21,11 +21,11 @@ public class Vector2d {
         return "(" + x + "," + y + ")";
     }
 
-    public boolean precedes (Vector2d other){
+    public boolean precedes(Vector2d other){
         return x <= other.getX() && y <= other.getY();
     }
 
-    public boolean follows (Vector2d other){
+    public boolean follows(Vector2d other){
         return x >= other.getX() && y >= other.getY();
     }
 

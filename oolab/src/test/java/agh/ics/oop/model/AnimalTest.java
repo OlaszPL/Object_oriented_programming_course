@@ -35,7 +35,7 @@ class AnimalTest {
         animal.move(MoveDirection.BACKWARD);
 
         // then
-        assertEquals(animal.getPosition(), new Vector2d(0, 4));
+        assertTrue(animal.isAt(new Vector2d(0, 4)));
     }
 
     @Test
@@ -56,7 +56,7 @@ class AnimalTest {
         // then
         assertTrue(animal.getPosition().follows(Animal.LOWER_LEFT)
                 && animal.getPosition().precedes(Animal.UPPER_RIGHT));
-        assertEquals(animal.getPosition(), new Vector2d(0, 4));
+        assertTrue(animal.isAt(new Vector2d(0, 4)));
     }
 
 }

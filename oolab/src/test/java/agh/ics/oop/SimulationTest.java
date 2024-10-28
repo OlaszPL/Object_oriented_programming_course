@@ -44,7 +44,7 @@ class SimulationTest {
         for (int i = 0; i < animals.size(); i++){
             assertTrue(animals.get(i).getPosition().follows(Animal.LOWER_LEFT) &&
                     animals.get(i).getPosition().precedes(Animal.UPPER_RIGHT));
-            assertEquals(animals.get(i).getPosition(), expected_positions[i]);
+            assertTrue(animals.get(i).isAt(expected_positions[i]));
             assertEquals(animals.get(i).getDirection(), expected_directions[i]);
         }
     }
@@ -73,7 +73,7 @@ class SimulationTest {
         for (int i = 0; i < animals.size(); i++){
             assertTrue(animals.get(i).getPosition().follows(Animal.LOWER_LEFT) &&
                     animals.get(i).getPosition().precedes(Animal.UPPER_RIGHT));
-            assertEquals(animals.get(i).getPosition(), positions.get(i));
+            assertTrue(animals.get(i).isAt(positions.get(i)));
             assertEquals(animals.get(i).getDirection(), MapDirection.NORTH);
         }
     }
@@ -109,7 +109,7 @@ class SimulationTest {
         for (int i = 0; i < animals.size(); i++){
             assertTrue(animals.get(i).getPosition().follows(Animal.LOWER_LEFT) &&
                     animals.get(i).getPosition().precedes(Animal.UPPER_RIGHT));
-            assertEquals(animals.get(i).getPosition(), expected_positions[i]);
+            assertTrue(animals.get(i).isAt(expected_positions[i]));
             assertEquals(animals.get(i).getDirection(), expected_directions[i]);
         }
     }

@@ -18,10 +18,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Zwierzę{" +
-                "orientacja=" + direction +
-                ", pozycja=" + position +
-                '}';
+        return "pozycja = %s, orientacja = %s".formatted(position, direction);
     }
 
     public boolean isAt(Vector2d position){

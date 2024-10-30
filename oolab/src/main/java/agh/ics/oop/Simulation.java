@@ -27,8 +27,7 @@ public class Simulation {
             int animal_idx = i % animals.size();
             Animal animal = animals.get(animal_idx);
             animal.move(moves.get(i));
-//          wykorzystuję toString() z klasy Vector2d
-            System.out.println("Zwierzę %d: ".formatted(animal_idx) + animal.getPosition());
+            System.out.printf("Zwierzę %d: %s%n",animal_idx, animal);
         }
     }
 

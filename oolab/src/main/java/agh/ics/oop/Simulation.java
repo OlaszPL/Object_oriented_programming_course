@@ -10,10 +10,6 @@ public class Simulation<T, P> {
     private final List<T> objects;
     private final WorldMap<T, P> map;
 
-    public List<T> getObjects() {
-        return objects;
-    }
-
 //  Wymaga wcześniejszej inicjalizacji listy obiektów oraz zakłada, że są one poprawnie dodane do mapy.
 //  Nie da się tego tutaj zrealizować, gdyż typy generyczne nie posiadają konstruktora, a dodawanie w tym miejscu do mapy
 //  wymagałoby usuwania z listy obiektów, które z jakiegoś powodu nie mogą zostać dodane do mapy (np. mają złą pozycję).

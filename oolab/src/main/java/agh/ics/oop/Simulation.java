@@ -1,35 +1,32 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.WorldMap;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Simulation {
+public class Simulation<T, P> {
     private final List<MoveDirection> moves;
-    private final List<Animal> animals = new ArrayList<>();
-    private final WorldMap map;
+    private final List<T> objects;
+    private final WorldMap<T, P> map;
 
-    public List<Animal> getAnimals() {
-        return animals;
+    public List<T> getObjects() {
+        return objects;
     }
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> moves, WorldMap map){
+//  Wymaga wcześniejszej inicjalizacji listy obiektów oraz zakłada, że są one poprawnie dodane do mapy.
+//  Nie da się tego tutaj zrealizować, gdyż typy generyczne nie posiadają konstruktora, a dodawanie w tym miejscu do mapy
+//  wymagałoby usuwania z listy obiektów, które z jakiegoś powodu nie mogą zostać dodane do mapy (np. mają złą pozycję).
+    public Simulation(List<T> objects, List<MoveDirection> moves, WorldMap<T, P> map){
         this.moves = moves;
         this.map = map;
-        for (Vector2d position : positions){
-            Animal newAnimal = new Animal(position);
-            if (this.map.place(newAnimal)) animals.add(newAnimal);
-        }
+        this.objects = objects;
     }
 
     public void run(){
         for (int i = 0; i < moves.size(); i++){
-            int animal_idx = i % animals.size();
-            map.move(animals.get(animal_idx), moves.get(i));
+            int object_idx = i % objects.size();
+            map.move(objects.get(object_idx), moves.get(i));
             System.out.println(map);
         }
     }

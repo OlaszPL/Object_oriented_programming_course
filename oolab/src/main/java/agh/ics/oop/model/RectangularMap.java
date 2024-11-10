@@ -5,7 +5,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RectangularMap implements WorldMap {
+public class RectangularMap implements WorldMap<Animal, Vector2d> {
 //    private final int width, height;
 //    atrybuty szerokości i wysokości są zbędne, ponieważ dane te dla mapy zawarte są w wektorze ZERO oraz upperRight
     public static final Vector2d ZERO = new Vector2d(0, 0);

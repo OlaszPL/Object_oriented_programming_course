@@ -10,7 +10,7 @@ class AnimalTest {
     void animalShouldHaveProperDirection(){
         // given
         Animal animal = new Animal();
-        MoveValidator validator = new RectangularMap(5, 5);
+        MoveValidator<Vector2d> validator = new RectangularMap(5, 5);
 
         // when
         animal.move(MoveDirection.RIGHT, validator);
@@ -28,7 +28,7 @@ class AnimalTest {
     void animalShouldMoveToProperPosition(){
         // given
         Animal animal = new Animal(new Vector2d(1,1));
-        MoveValidator validator = new RectangularMap(5, 5);
+        MoveValidator<Vector2d> validator = new RectangularMap(5, 5);
 
         // when
         animal.move(MoveDirection.FORWARD, validator);

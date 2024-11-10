@@ -29,7 +29,7 @@ public class Animal {
         return position;
     }
 
-    public void move(MoveDirection direction, MoveValidator validator){
+    public void move(MoveDirection direction, MoveValidator<Vector2d> validator){
         switch (direction){
             case RIGHT -> this.direction = this.direction.next();
             case LEFT -> this.direction = this.direction.previous();

@@ -119,4 +119,37 @@ class SimulationTest {
             assertEquals(animalsOnMap.get(i).getDirection(), expected_directions[i]);
         }
     }
+
+    @Test
+    void shouldMoveTextBlocksCorrectlyWhenGivenValidDirections(){
+        // given
+        String []args = {"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
+        List<MoveDirection> expectedArgs = Arrays.asList(MoveDirection.FORWARD, MoveDirection.BACKWARD,
+                MoveDirection.RIGHT, MoveDirection.LEFT, MoveDirection.FORWARD, MoveDirection.FORWARD,
+                MoveDirection.RIGHT, MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.FORWARD,
+                MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.FORWARD,
+                MoveDirection.FORWARD, MoveDirection.FORWARD);
+
+        List<MoveDirection> directions = OptionsParser.parse(args);
+        List<String> textBlocks = List.of("Orki to takie pandy".split(" "));
+
+        int[] expected_positions = {2, 0, 3, 1};
+
+        TextMap map = new TextMap();
+        Simulation<String, Integer> simulation = new Simulation<>(textBlocks, directions, map);
+
+        // when
+        simulation.run();
+
+        // then
+        List<String> textsOnMap = simulation.getObjectsOnMap();
+
+        assertEquals(directions, expectedArgs);
+        assertEquals(textsOnMap.size(), 4);
+
+        for (int i = 0; i < textsOnMap.size(); i++){
+            assertEquals(textsOnMap.get(i), map.objectAt(expected_positions[i]));
+        }
+    }
+
 }

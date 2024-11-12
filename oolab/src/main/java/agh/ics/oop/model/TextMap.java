@@ -2,7 +2,7 @@ package agh.ics.oop.model;
 
 import java.util.ArrayList;
 
-public class TextMap implements WorldMap<String, Integer> {
+public class TextMap implements WorldNumberPositionMap<String, Integer> {
     private final ArrayList<String> list;
 
     public TextMap() {

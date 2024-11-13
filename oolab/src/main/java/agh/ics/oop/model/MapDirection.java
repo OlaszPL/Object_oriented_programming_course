@@ -9,7 +9,7 @@ public enum MapDirection {
     private static final Vector2d[] vectors = {new Vector2d(0, 1), new Vector2d(0, -1),
             new Vector2d(1, 0), new Vector2d(-1, 0)};
 
-    private static final String[] directions = {"Północ", "Południe", "Wschód", "Zachód"};
+    private static final String[] directions = {"N", "S", "E", "W"};
 
     @Override
     public String toString(){

@@ -1,15 +1,12 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.MapVisualizer;
-
 import java.util.*;
 
-public class GrassField implements WorldMap{
-    private final Map<Vector2d, Animal> animals = new HashMap<>();
+public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
-    private final MapVisualizer vis = new MapVisualizer(this);
 
     public GrassField(int grassFieldsNo) {
+        super();
         int upperGrassBound = (int) Math.sqrt(grassFieldsNo * 10);
         Random rand = new Random();
 
@@ -22,15 +19,10 @@ public class GrassField implements WorldMap{
 
     @Override
     public WorldElement objectAt(Vector2d position) {
-        WorldElement animal = animals.get(position);
+        WorldElement animal = super.objectAt(position);
         if (animal != null) return animal;
 
         return grasses.get(position);
-    }
-
-    @Override
-    public boolean isOccupied(Vector2d position) {
-        return objectAt(position) != null;
     }
 
     @Override
@@ -39,26 +31,9 @@ public class GrassField implements WorldMap{
     }
 
     @Override
-    public boolean place(Animal animal) {
-        if (canMoveTo(animal.getPosition())){
-            animals.put(animal.getPosition(), animal);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void move(Animal animal, MoveDirection direction) {
-        if (animals.get(animal.getPosition()) == animal){ // jeżeli zwierzak jest na mapie
-            animals.remove(animal.getPosition(), animal);
-            animal.move(direction, this);
-            animals.put(animal.getPosition(), animal); // jeżeli ruch jest niemożliwy, to nic się nie zmieniło
-        }
-    }
-
     public List<WorldElement> getElements(){
+        List<WorldElement> list = super.getElements();
 //      kopia wartości aby nie było problemu z błędnym stanem obiektu
-        ArrayList<WorldElement> list = new ArrayList<>(List.copyOf(animals.values()));
         list.addAll(List.copyOf(grasses.values()));
 
         return list;

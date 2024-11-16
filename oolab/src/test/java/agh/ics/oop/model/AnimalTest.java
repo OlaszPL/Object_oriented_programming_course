@@ -2,7 +2,6 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
-import static agh.ics.oop.model.RectangularMap.ZERO;
 import static org.junit.jupiter.api.Assertions.*;
 class AnimalTest {
 
@@ -58,8 +57,8 @@ class AnimalTest {
         animal.move(MoveDirection.FORWARD, map);
 
         // then
-        assertTrue(animal.getPosition().follows(ZERO)
-                && animal.getPosition().precedes(map.getUpperRight()));
+        assertTrue(animal.getPosition().follows(map.getLowerLeftBound())
+                && animal.getPosition().precedes(map.getUpperRightBound()));
         assertTrue(animal.isAt(new Vector2d(0, 4)));
     }
 

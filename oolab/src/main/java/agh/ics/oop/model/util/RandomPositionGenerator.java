@@ -24,7 +24,7 @@ public class RandomPositionGenerator implements Iterable<Vector2d> {
 
     @Override
     public Iterator<Vector2d> iterator() {
-        return new Iterator<Vector2d>() {
+        return new Iterator<>() {
 
             private final int[] indices; // Tablica z indeksami, które będziemy tasować
             private int currIdx = 0;

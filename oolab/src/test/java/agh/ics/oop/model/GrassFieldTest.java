@@ -4,12 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RectangularMapTest {
-
+class GrassFieldTest {
     @Test
     void objectShouldBePlacedAtPosition(){
         // given
-        RectangularMap map = new RectangularMap(3, 3);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(1, 2));
 
         // then
@@ -21,19 +20,21 @@ class RectangularMapTest {
     @Test
     void objectShouldNotBePlacedAtPosition(){
         // given
-        RectangularMap map = new RectangularMap(3, 5);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(-5, 16));
+        Animal prePlacedAnimal = new Animal(new Vector2d(-5, 16));
+
+        // when
+        map.place(prePlacedAnimal);
 
         // then
         assertFalse(map.place(animal));
-        assertNull(map.objectAt(new Vector2d(-5, 16)));
-        assertFalse(map.isOccupied(new Vector2d(-5, 16)));
     }
 
     @Test
     void objectShouldBeAbleToMove(){
         // given
-        RectangularMap map = new RectangularMap(5, 5);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 2));
         map.place(animal);
 
@@ -48,9 +49,11 @@ class RectangularMapTest {
     @Test
     void objectShouldNotBeAbleToMove(){
         // given
-        RectangularMap map = new RectangularMap(2, 3);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 2));
+        Animal animal2 = new Animal(new Vector2d(0, 3));
         map.place(animal);
+        map.place(animal2);
 
         // when
         MoveDirection direction = MoveDirection.FORWARD;
@@ -63,7 +66,7 @@ class RectangularMapTest {
     @Test
     void objectShouldMove(){
         // given
-        RectangularMap map = new RectangularMap(2, 6);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 3));
         map.place(animal);
 
@@ -79,9 +82,11 @@ class RectangularMapTest {
     @Test
     void objectShouldNotMove(){
         // given
-        RectangularMap map = new RectangularMap(2, 2);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(1, 1));
+        Animal animal2 = new Animal(new Vector2d(1, 2));
         map.place(animal);
+        map.place(animal2);
         MoveDirection direction = MoveDirection.FORWARD;
 
         // when
@@ -95,7 +100,7 @@ class RectangularMapTest {
     @Test
     void shouldDetectCollisionAndNotMove(){
         // given
-        RectangularMap map = new RectangularMap(5, 5);
+        GrassField map = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 0));
         MoveDirection direction = MoveDirection.FORWARD;

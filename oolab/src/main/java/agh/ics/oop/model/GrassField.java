@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.RandomPositionGenerator;
+
 import java.util.*;
 
 public class GrassField extends AbstractWorldMap{
@@ -8,12 +10,20 @@ public class GrassField extends AbstractWorldMap{
     public GrassField(int grassFieldsNo) {
         super();
         int upperGrassBound = (int) Math.sqrt(grassFieldsNo * 10);
-        Random rand = new Random();
 
-        while (grasses.size() < grassFieldsNo){
-            Vector2d newPos = new Vector2d(rand.nextInt(upperGrassBound + 1), rand.nextInt(upperGrassBound + 1));
-//            +1 bo nextInt jest exclusive
-            if (!grasses.containsKey(newPos)) grasses.put(newPos, new Grass(newPos));
+//        Losowanie niedeterministyczne
+//        Random rand = new Random();
+//
+//        while (grasses.size() < grassFieldsNo){
+//            Vector2d newPos = new Vector2d(rand.nextInt(upperGrassBound + 1), rand.nextInt(upperGrassBound + 1));
+////            +1 bo nextInt jest exclusive
+//            if (!grasses.containsKey(newPos)) grasses.put(newPos, new Grass(newPos));
+//        }
+
+//        Losowanie deterministyczne
+        RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(upperGrassBound + 1, upperGrassBound + 1, grassFieldsNo);
+        for (Vector2d grassPosition : randomPositionGenerator) {
+            grasses.put(grassPosition, new Grass(grassPosition));
         }
     }
 

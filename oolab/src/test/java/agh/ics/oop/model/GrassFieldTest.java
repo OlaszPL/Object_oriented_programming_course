@@ -2,9 +2,40 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GrassFieldTest {
+    @Test
+    void numberOfAddedGrassesShouldBeCorrect(){
+        // given
+        GrassField map = new GrassField(10);
+
+        // when
+        List<WorldElement> list = map.getElements();
+
+        // then
+        assertEquals(list.size(), 10) ;
+    }
+
+    @Test
+    void grassesShouldBeAddedInCorrectBounds(){
+        // given
+        GrassField map = new GrassField(10);
+        int upperGrassBound = (int) Math.sqrt(10 * 10);
+        Vector2d lower = new Vector2d(0, 0);
+        Vector2d upper = new Vector2d(upperGrassBound, upperGrassBound);
+
+        // when
+        List<WorldElement> list = map.getElements();
+
+        // then
+        for (WorldElement grass : list){
+            assertTrue(grass.getPosition().follows(lower) && grass.getPosition().precedes(upper));
+        }
+    }
+
     @Test
     void objectShouldBePlacedAtPosition(){
         // given

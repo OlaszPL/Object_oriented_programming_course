@@ -2,14 +2,44 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class RectangularMapTest {
+class GrassFieldTest {
+    @Test
+    void numberOfAddedGrassesShouldBeCorrect(){
+        // given
+        GrassField map = new GrassField(10);
+
+        // when
+        List<WorldElement> list = map.getElements();
+
+        // then
+        assertEquals(list.size(), 10) ;
+    }
+
+    @Test
+    void grassesShouldBeAddedInCorrectBounds(){
+        // given
+        GrassField map = new GrassField(10);
+        int upperGrassBound = (int) Math.sqrt(10 * 10);
+        Vector2d lower = new Vector2d(0, 0);
+        Vector2d upper = new Vector2d(upperGrassBound, upperGrassBound);
+
+        // when
+        List<WorldElement> list = map.getElements();
+
+        // then
+        for (WorldElement grass : list){
+            assertTrue(grass.getPosition().follows(lower) && grass.getPosition().precedes(upper));
+        }
+    }
 
     @Test
     void objectShouldBePlacedAtPosition(){
         // given
-        RectangularMap map = new RectangularMap(3, 3);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(1, 2));
 
         // then
@@ -21,19 +51,21 @@ class RectangularMapTest {
     @Test
     void objectShouldNotBePlacedAtPosition(){
         // given
-        RectangularMap map = new RectangularMap(3, 5);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(-5, 16));
+        Animal prePlacedAnimal = new Animal(new Vector2d(-5, 16));
+
+        // when
+        map.place(prePlacedAnimal);
 
         // then
         assertFalse(map.place(animal));
-        assertNull(map.objectAt(new Vector2d(-5, 16)));
-        assertFalse(map.isOccupied(new Vector2d(-5, 16)));
     }
 
     @Test
     void objectShouldBeAbleToMove(){
         // given
-        RectangularMap map = new RectangularMap(5, 5);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 2));
         map.place(animal);
 
@@ -48,9 +80,11 @@ class RectangularMapTest {
     @Test
     void objectShouldNotBeAbleToMove(){
         // given
-        RectangularMap map = new RectangularMap(2, 3);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 2));
+        Animal animal2 = new Animal(new Vector2d(0, 3));
         map.place(animal);
+        map.place(animal2);
 
         // when
         MoveDirection direction = MoveDirection.FORWARD;
@@ -63,7 +97,7 @@ class RectangularMapTest {
     @Test
     void objectShouldMove(){
         // given
-        RectangularMap map = new RectangularMap(2, 6);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 3));
         map.place(animal);
 
@@ -79,9 +113,11 @@ class RectangularMapTest {
     @Test
     void objectShouldNotMove(){
         // given
-        RectangularMap map = new RectangularMap(2, 2);
+        GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(1, 1));
+        Animal animal2 = new Animal(new Vector2d(1, 2));
         map.place(animal);
+        map.place(animal2);
         MoveDirection direction = MoveDirection.FORWARD;
 
         // when
@@ -95,7 +131,7 @@ class RectangularMapTest {
     @Test
     void shouldDetectCollisionAndNotMove(){
         // given
-        RectangularMap map = new RectangularMap(5, 5);
+        GrassField map = new GrassField(10);
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 0));
         MoveDirection direction = MoveDirection.FORWARD;

@@ -17,7 +17,7 @@ class GrassFieldTest {
         List<WorldElement> list = map.getElements();
 
         // then
-        assertEquals(list.size(), 10) ;
+        assertEquals(10, list.size()) ;
     }
 
     @Test

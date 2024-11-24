@@ -37,7 +37,7 @@ class SimulationTest {
         List<Animal> animals = simulation.getAnimals();
 
         assertEquals(directions, expectedArgs);
-        assertEquals(animals.size(), 2);
+        assertEquals(2, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
             assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&
@@ -74,14 +74,14 @@ class SimulationTest {
         List<Animal> animals = simulation.getAnimals();
 
         assertEquals(directions, expectedArgs);
-        assertEquals(animals.size(), 3);
+        assertEquals(3, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
             assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&
                     animals.get(i).getPosition().precedes(map.getUpperRightBound()));
             assertTrue(animals.get(i).isAt(positions.get(i)));
             assertEquals(animals.get(i), map.objectAt(positions.get(i)));
-            assertEquals(animals.get(i).getDirection(), MapDirection.NORTH);
+            assertEquals(MapDirection.NORTH, animals.get(i).getDirection());
         }
     }
 
@@ -117,7 +117,7 @@ class SimulationTest {
         List<Animal> animals = simulation.getAnimals();
 
         assertEquals(directions, expectedArgs);
-        assertEquals(animals.size(), 4);
+        assertEquals(4, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
             assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&

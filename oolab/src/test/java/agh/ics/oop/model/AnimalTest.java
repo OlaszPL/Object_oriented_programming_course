@@ -57,8 +57,8 @@ class AnimalTest {
         animal.move(MoveDirection.FORWARD, map);
 
         // then
-        assertTrue(animal.getPosition().follows(map.getLowerLeftBound())
-                && animal.getPosition().precedes(map.getUpperRightBound()));
+        assertTrue(animal.getPosition().follows(map.getCurrentBounds().lowerLeft())
+                && animal.getPosition().precedes(map.getCurrentBounds().upperRight()));
         assertTrue(animal.isAt(new Vector2d(0, 4)));
     }
 

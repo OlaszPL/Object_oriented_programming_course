@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.IncorrectPositionException;
 import agh.ics.oop.model.util.MapVisualizer;
 
@@ -22,12 +23,9 @@ public abstract class AbstractWorldMap implements WorldMap {
         this(new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE), new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE));
     }
 
-    public Vector2d getLowerLeftBound() {
-        return lowerLeftBound;
-    }
-
-    public Vector2d getUpperRightBound() {
-        return upperRightBound;
+    @Override
+    public Boundary getCurrentBounds(){
+        return new Boundary(lowerLeftBound, upperRightBound);
     }
 
     @Override
@@ -66,5 +64,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     public List<WorldElement> getElements(){
 //      kopia wartości aby nie było problemu z błędnym stanem obiektu
         return new ArrayList<>(List.copyOf(animals.values()));
+    }
+
+    @Override
+    public String toString() {
+        Boundary bound = getCurrentBounds();
+        return vis.draw(bound.lowerLeft(), bound.upperRight());
     }
 }

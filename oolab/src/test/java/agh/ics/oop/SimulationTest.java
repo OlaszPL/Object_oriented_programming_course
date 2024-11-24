@@ -40,8 +40,8 @@ class SimulationTest {
         assertEquals(2, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
-            assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&
-                    animals.get(i).getPosition().precedes(map.getUpperRightBound()));
+            assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
+                    animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(expected_positions[i]));
             assertEquals(animals.get(i), map.objectAt(expected_positions[i]));
             assertEquals(animals.get(i).getDirection(), expected_directions[i]);
@@ -77,8 +77,8 @@ class SimulationTest {
         assertEquals(3, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
-            assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&
-                    animals.get(i).getPosition().precedes(map.getUpperRightBound()));
+            assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
+                    animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(positions.get(i)));
             assertEquals(animals.get(i), map.objectAt(positions.get(i)));
             assertEquals(MapDirection.NORTH, animals.get(i).getDirection());
@@ -120,8 +120,8 @@ class SimulationTest {
         assertEquals(4, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
-            assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&
-                    animals.get(i).getPosition().precedes(map.getUpperRightBound()));
+            assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
+                    animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(expected_positions[i]));
             assertEquals(animals.get(i), map.objectAt(expected_positions[i]));
             assertEquals(animals.get(i).getDirection(), expected_directions[i]);

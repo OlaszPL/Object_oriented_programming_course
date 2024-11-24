@@ -1,11 +1,13 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.RandomPositionGenerator;
 
 import java.util.*;
 
 public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
+    private static final Vector2d ZERO = new Vector2d(0,0);
 
     public GrassField(int grassFieldsNo) {
         super();
@@ -40,10 +42,10 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    public String toString() {
+    public Boundary getCurrentBounds() {
         List<WorldElement> elementsList = getElements();
 
-        if (elementsList.isEmpty()) return "";
+        if (elementsList.isEmpty()) return new Boundary(ZERO, ZERO);
 
         Vector2d dynamicUpperBound = elementsList.getFirst().getPosition();
         Vector2d dynamicLowerBound = elementsList.getFirst().getPosition();
@@ -54,6 +56,6 @@ public class GrassField extends AbstractWorldMap{
             dynamicUpperBound = dynamicUpperBound.upperRight(elementPosition);
         }
 
-        return vis.draw(dynamicLowerBound, dynamicUpperBound);
+        return new Boundary(dynamicLowerBound, dynamicUpperBound);
     }
 }

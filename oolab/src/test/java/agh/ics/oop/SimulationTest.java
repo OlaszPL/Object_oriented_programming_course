@@ -28,6 +28,7 @@ class SimulationTest {
         Vector2d[] expected_positions = {new Vector2d(2,0), new Vector2d(3,4)};
 
         RectangularMap map = new RectangularMap(5, 5);
+        map.registerObserver(new ConsoleMapDisplay());
         Simulation simulation = new Simulation(positions, directions, map);
 
         // when
@@ -49,7 +50,7 @@ class SimulationTest {
     }
 
     @Test
-    void shouldKeepAThreeAnimalsInInitialPositionsWhenGivenInvalidDirections(){
+    void shouldKeepThreeAnimalsInInitialPositionsWhenGivenInvalidDirections(){
         // given
         String []args = {"fb", "bgh", "rr", "u", "a", "mm"};
         List<MoveDirection> expectedArgs = new ArrayList<>();
@@ -65,6 +66,7 @@ class SimulationTest {
                 new Vector2d(1,1));
 
         RectangularMap map = new RectangularMap(5, 5);
+        map.registerObserver(new ConsoleMapDisplay());
         Simulation simulation = new Simulation(positions, directions, map);
 
         // when
@@ -108,6 +110,7 @@ class SimulationTest {
         new Vector2d(2, 2), new Vector2d(2, 0)};
 
         RectangularMap map = new RectangularMap(5, 5);
+        map.registerObserver(new ConsoleMapDisplay());
         Simulation simulation = new Simulation(positions, directions, map);
 
         // when

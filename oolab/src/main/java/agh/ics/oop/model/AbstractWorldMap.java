@@ -13,6 +13,21 @@ public abstract class AbstractWorldMap implements WorldMap {
     protected final Vector2d lowerLeftBound, upperRightBound;
     private final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer vis = new MapVisualizer(this);
+    private final List<MapChangeListener> observers = new ArrayList<>();
+
+    public void registerObserver(MapChangeListener observer){
+        observers.add(observer);
+    }
+
+    public void deregisterObserver(MapChangeListener observer){
+        observers.remove(observer);
+    }
+
+    private void mapChanged(String message){
+        for (MapChangeListener observer : observers){
+            observer.mapChanged(this, message);
+        }
+    }
 
     public AbstractWorldMap(Vector2d lowerLeftBound, Vector2d upperRightBound) {
         this.lowerLeftBound = lowerLeftBound;
@@ -47,6 +62,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void place(Animal animal) throws IncorrectPositionException {
         if (canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(), animal);
+            mapChanged("Animal has been placed at %s".formatted(animal.getPosition()));
         }
         else throw new IncorrectPositionException(animal.getPosition());
     }
@@ -54,9 +70,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public void move(Animal animal, MoveDirection direction) {
         if (animals.get(animal.getPosition()) == animal){ // jeżeli zwierzak jest na mapie
+            Vector2d oldPosition = animal.getPosition();
             animals.remove(animal.getPosition(), animal);
             animal.move(direction, this);
             animals.put(animal.getPosition(), animal); // jeżeli ruch jest niemożliwy, to nic się nie zmieniło
+            mapChanged("Animal has been moved from %s to %s".formatted(oldPosition, animal.getPosition()));
         }
     }
 

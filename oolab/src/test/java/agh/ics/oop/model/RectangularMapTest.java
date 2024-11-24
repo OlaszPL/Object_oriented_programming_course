@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.IncorrectPositionException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +14,7 @@ class RectangularMapTest {
         Animal animal = new Animal(new Vector2d(1, 2));
 
         // then
-        assertTrue(map.place(animal));
+        assertDoesNotThrow(() -> map.place(animal));
         assertEquals(animal, map.objectAt(new Vector2d(1, 2)));
         assertTrue(map.isOccupied(new Vector2d(1,2)));
     }
@@ -25,7 +26,7 @@ class RectangularMapTest {
         Animal animal = new Animal(new Vector2d(-5, 16));
 
         // then
-        assertFalse(map.place(animal));
+        assertThrows(IncorrectPositionException.class, () -> map.place(animal));
         assertNull(map.objectAt(new Vector2d(-5, 16)));
         assertFalse(map.isOccupied(new Vector2d(-5, 16)));
     }
@@ -35,7 +36,11 @@ class RectangularMapTest {
         // given
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal = new Animal(new Vector2d(0, 2));
-        map.place(animal);
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
 
         // when
         MoveDirection direction = MoveDirection.FORWARD;
@@ -50,7 +55,11 @@ class RectangularMapTest {
         // given
         RectangularMap map = new RectangularMap(2, 3);
         Animal animal = new Animal(new Vector2d(0, 2));
-        map.place(animal);
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
 
         // when
         MoveDirection direction = MoveDirection.FORWARD;
@@ -65,7 +74,11 @@ class RectangularMapTest {
         // given
         RectangularMap map = new RectangularMap(2, 6);
         Animal animal = new Animal(new Vector2d(0, 3));
-        map.place(animal);
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
 
         // when
         MoveDirection direction = MoveDirection.FORWARD;
@@ -81,7 +94,11 @@ class RectangularMapTest {
         // given
         RectangularMap map = new RectangularMap(2, 2);
         Animal animal = new Animal(new Vector2d(1, 1));
-        map.place(animal);
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
         MoveDirection direction = MoveDirection.FORWARD;
 
         // when
@@ -99,14 +116,17 @@ class RectangularMapTest {
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 0));
         MoveDirection direction = MoveDirection.FORWARD;
-        map.place(animal1);
-        map.place(animal2);
+        try {
+            map.place(animal1);
+            map.place(animal2);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
 
         // when
         map.move(animal2, direction);
 
         // then
         assertEquals(animal2, map.objectAt(new Vector2d(1, 0)));
-
     }
 }

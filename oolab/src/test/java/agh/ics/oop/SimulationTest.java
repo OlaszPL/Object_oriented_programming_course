@@ -53,8 +53,14 @@ class SimulationTest {
         // given
         String []args = {"fb", "bgh", "rr", "u", "a", "mm"};
         List<MoveDirection> expectedArgs = new ArrayList<>();
+        List<MoveDirection> directions;
 
-        List<MoveDirection> directions = OptionsParser.parse(args);
+        try {
+            directions = OptionsParser.parse(args);
+        } catch (RuntimeException e) {
+            System.out.println("Invalid argument was given!");
+            directions = new ArrayList<>(); // aby sprawdzić dalszą część symulacji
+        }
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4),
                 new Vector2d(1,1));
 
@@ -83,11 +89,16 @@ class SimulationTest {
     void shouldHandleValidAndInvalidDirectionsForFourAnimals(){
         // given
         String []args = {"mn", "bb", "f", "m", "r", "l", "b", "f", "u", "f", "f", "b"};
+        List<MoveDirection> directions;
         List<MoveDirection> expectedArgs = Arrays.asList(MoveDirection.FORWARD, MoveDirection.RIGHT,
                 MoveDirection.LEFT, MoveDirection.BACKWARD, MoveDirection.FORWARD, MoveDirection.FORWARD,
                 MoveDirection.FORWARD, MoveDirection.BACKWARD);
-
-        List<MoveDirection> directions = OptionsParser.parse(args);
+        try {
+            directions = OptionsParser.parse(args);
+        } catch (RuntimeException e) {
+            System.out.println("Invalid argument was given!");
+            directions = expectedArgs; // aby sprawdzić dalszą część symulacji
+        }
         List<Vector2d> positions = List.of(new Vector2d(0, 0), new Vector2d(4,4),
                 new Vector2d(3, 2), new Vector2d(2, 1));
 

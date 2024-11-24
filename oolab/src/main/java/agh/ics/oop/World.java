@@ -10,7 +10,7 @@ import java.util.List;
 public class World {
 
     public static void simRectangularMap(List<MoveDirection> directions){
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(100, 100));
         RectangularMap map = new RectangularMap(5, 5);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
@@ -24,9 +24,12 @@ public class World {
     }
 
     public static void main(String[] args) {
-        List<MoveDirection> directions = OptionsParser.parse(args);
-
-        simRectangularMap(directions);
-        simGrassField(directions, 10);
+        try {
+            List<MoveDirection> directions = OptionsParser.parse(args);
+            simRectangularMap(directions);
+            simGrassField(directions, 10);
+        } catch (IllegalArgumentException e) {
+            System.out.printf("Given illegal argument: %s%n", e.getMessage());
+        }
     }
 }

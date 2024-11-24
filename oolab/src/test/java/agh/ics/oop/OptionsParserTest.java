@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OptionsParserTest {
 
@@ -68,16 +69,12 @@ class OptionsParserTest {
     }
 
     @Test
-    void parsedShouldBeNullForUnknownDirections(){
+    void parsedShouldThrowExceptionForUnknownDirections(){
         // given
         String[] args = {"s", "bb", "B"};
-        List<MoveDirection> expected = new ArrayList<>();
-
-        // when
-        List<MoveDirection> parsed = OptionsParser.parse(args);
 
         // then
-        assertEquals(expected, parsed);
+        assertThrows(RuntimeException.class, () -> OptionsParser.parse(args));
     }
 
 
@@ -85,19 +82,6 @@ class OptionsParserTest {
     void parsedShouldContainMultipleDirection(){
         // given
         String[] args = {"f", "b", "l", "r"};
-        List<MoveDirection> expected = Arrays.asList(MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.RIGHT);
-
-        // when
-        List<MoveDirection> parsed = OptionsParser.parse(args);
-
-        // then
-        assertEquals(expected, parsed);
-    }
-
-    @Test
-    void parsedShouldContainMultipleDirectionAndSkipUnknown(){
-        // given
-        String[] args = {"f", "s", "c", "b", "x", "l", "r", "m", "sth"};
         List<MoveDirection> expected = Arrays.asList(MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.LEFT, MoveDirection.RIGHT);
 
         // when

@@ -20,7 +20,7 @@ class AnimalTest {
         animal.move(MoveDirection.BACKWARD, validator);
 
         // then
-        assertEquals(animal.getDirection(), MapDirection.EAST);
+        assertEquals(MapDirection.EAST, animal.getDirection());
     }
 
     @Test

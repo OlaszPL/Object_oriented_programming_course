@@ -28,6 +28,7 @@ class SimulationTest {
         Vector2d[] expected_positions = {new Vector2d(2,0), new Vector2d(3,4)};
 
         RectangularMap map = new RectangularMap(5, 5);
+        map.registerObserver(new ConsoleMapDisplay());
         Simulation simulation = new Simulation(positions, directions, map);
 
         // when
@@ -37,11 +38,11 @@ class SimulationTest {
         List<Animal> animals = simulation.getAnimals();
 
         assertEquals(directions, expectedArgs);
-        assertEquals(animals.size(), 2);
+        assertEquals(2, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
-            assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&
-                    animals.get(i).getPosition().precedes(map.getUpperRightBound()));
+            assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
+                    animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(expected_positions[i]));
             assertEquals(animals.get(i), map.objectAt(expected_positions[i]));
             assertEquals(animals.get(i).getDirection(), expected_directions[i]);
@@ -49,16 +50,23 @@ class SimulationTest {
     }
 
     @Test
-    void shouldKeepAThreeAnimalsInInitialPositionsWhenGivenInvalidDirections(){
+    void shouldKeepThreeAnimalsInInitialPositionsWhenGivenInvalidDirections(){
         // given
         String []args = {"fb", "bgh", "rr", "u", "a", "mm"};
         List<MoveDirection> expectedArgs = new ArrayList<>();
+        List<MoveDirection> directions;
 
-        List<MoveDirection> directions = OptionsParser.parse(args);
+        try {
+            directions = OptionsParser.parse(args);
+        } catch (RuntimeException e) {
+            System.out.println("Invalid argument was given!");
+            directions = new ArrayList<>(); // aby sprawdzić dalszą część symulacji
+        }
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4),
                 new Vector2d(1,1));
 
         RectangularMap map = new RectangularMap(5, 5);
+        map.registerObserver(new ConsoleMapDisplay());
         Simulation simulation = new Simulation(positions, directions, map);
 
         // when
@@ -68,14 +76,14 @@ class SimulationTest {
         List<Animal> animals = simulation.getAnimals();
 
         assertEquals(directions, expectedArgs);
-        assertEquals(animals.size(), 3);
+        assertEquals(3, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
-            assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&
-                    animals.get(i).getPosition().precedes(map.getUpperRightBound()));
+            assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
+                    animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(positions.get(i)));
             assertEquals(animals.get(i), map.objectAt(positions.get(i)));
-            assertEquals(animals.get(i).getDirection(), MapDirection.NORTH);
+            assertEquals(MapDirection.NORTH, animals.get(i).getDirection());
         }
     }
 
@@ -83,11 +91,16 @@ class SimulationTest {
     void shouldHandleValidAndInvalidDirectionsForFourAnimals(){
         // given
         String []args = {"mn", "bb", "f", "m", "r", "l", "b", "f", "u", "f", "f", "b"};
+        List<MoveDirection> directions;
         List<MoveDirection> expectedArgs = Arrays.asList(MoveDirection.FORWARD, MoveDirection.RIGHT,
                 MoveDirection.LEFT, MoveDirection.BACKWARD, MoveDirection.FORWARD, MoveDirection.FORWARD,
                 MoveDirection.FORWARD, MoveDirection.BACKWARD);
-
-        List<MoveDirection> directions = OptionsParser.parse(args);
+        try {
+            directions = OptionsParser.parse(args);
+        } catch (RuntimeException e) {
+            System.out.println("Invalid argument was given!");
+            directions = expectedArgs; // aby sprawdzić dalszą część symulacji
+        }
         List<Vector2d> positions = List.of(new Vector2d(0, 0), new Vector2d(4,4),
                 new Vector2d(3, 2), new Vector2d(2, 1));
 
@@ -97,6 +110,7 @@ class SimulationTest {
         new Vector2d(2, 2), new Vector2d(2, 0)};
 
         RectangularMap map = new RectangularMap(5, 5);
+        map.registerObserver(new ConsoleMapDisplay());
         Simulation simulation = new Simulation(positions, directions, map);
 
         // when
@@ -106,11 +120,11 @@ class SimulationTest {
         List<Animal> animals = simulation.getAnimals();
 
         assertEquals(directions, expectedArgs);
-        assertEquals(animals.size(), 4);
+        assertEquals(4, animals.size());
 
         for (int i = 0; i < animals.size(); i++){
-            assertTrue(animals.get(i).getPosition().follows(map.getLowerLeftBound()) &&
-                    animals.get(i).getPosition().precedes(map.getUpperRightBound()));
+            assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
+                    animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(expected_positions[i]));
             assertEquals(animals.get(i), map.objectAt(expected_positions[i]));
             assertEquals(animals.get(i).getDirection(), expected_directions[i]);

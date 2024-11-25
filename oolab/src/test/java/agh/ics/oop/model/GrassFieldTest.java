@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.IncorrectPositionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,7 +17,7 @@ class GrassFieldTest {
         List<WorldElement> list = map.getElements();
 
         // then
-        assertEquals(list.size(), 10) ;
+        assertEquals(10, list.size()) ;
     }
 
     @Test
@@ -43,7 +44,7 @@ class GrassFieldTest {
         Animal animal = new Animal(new Vector2d(1, 2));
 
         // then
-        assertTrue(map.place(animal));
+        assertDoesNotThrow(() -> map.place(animal));
         assertEquals(animal, map.objectAt(new Vector2d(1, 2)));
         assertTrue(map.isOccupied(new Vector2d(1,2)));
     }
@@ -55,11 +56,9 @@ class GrassFieldTest {
         Animal animal = new Animal(new Vector2d(-5, 16));
         Animal prePlacedAnimal = new Animal(new Vector2d(-5, 16));
 
-        // when
-        map.place(prePlacedAnimal);
-
         // then
-        assertFalse(map.place(animal));
+        assertDoesNotThrow(() -> map.place(prePlacedAnimal));
+        assertThrows(IncorrectPositionException.class, () -> map.place(animal));
     }
 
     @Test
@@ -67,7 +66,11 @@ class GrassFieldTest {
         // given
         GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 2));
-        map.place(animal);
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
 
         // when
         MoveDirection direction = MoveDirection.FORWARD;
@@ -83,8 +86,12 @@ class GrassFieldTest {
         GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 2));
         Animal animal2 = new Animal(new Vector2d(0, 3));
-        map.place(animal);
-        map.place(animal2);
+        try {
+            map.place(animal);
+            map.place(animal2);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
 
         // when
         MoveDirection direction = MoveDirection.FORWARD;
@@ -99,7 +106,11 @@ class GrassFieldTest {
         // given
         GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(0, 3));
-        map.place(animal);
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
 
         // when
         MoveDirection direction = MoveDirection.FORWARD;
@@ -116,8 +127,12 @@ class GrassFieldTest {
         GrassField map = new GrassField(10);
         Animal animal = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 2));
-        map.place(animal);
-        map.place(animal2);
+        try {
+            map.place(animal);
+            map.place(animal2);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
         MoveDirection direction = MoveDirection.FORWARD;
 
         // when
@@ -135,8 +150,12 @@ class GrassFieldTest {
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 0));
         MoveDirection direction = MoveDirection.FORWARD;
-        map.place(animal1);
-        map.place(animal2);
+        try {
+            map.place(animal1);
+            map.place(animal2);
+        } catch (IncorrectPositionException e) {
+            fail("Exception thrown during first placement: " + e.getMessage());
+        }
 
         // when
         map.move(animal2, direction);

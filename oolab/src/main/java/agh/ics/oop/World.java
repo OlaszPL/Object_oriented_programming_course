@@ -35,7 +35,8 @@ public class World {
 
             SimulationEngine simulationEngine = new SimulationEngine(simulationList);
 //            simulationEngine.runSync();
-            simulationEngine.runAsync();
+//            simulationEngine.runAsync();
+            simulationEngine.runAsyncInThreadPool();
         } catch (IllegalArgumentException e) {
             System.out.printf("Given illegal argument: %s%n", e.getMessage());
             return;

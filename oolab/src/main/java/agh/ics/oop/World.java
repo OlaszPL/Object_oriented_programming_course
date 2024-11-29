@@ -2,6 +2,7 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class World {
@@ -25,7 +26,13 @@ public class World {
     public static void main(String[] args) {
         try {
             List<MoveDirection> directions = OptionsParser.parse(args);
-            List<Simulation> simulationList = List.of(simRectangularMap(directions), simGrassField(directions, 10));
+            List<Simulation> simulationList = new ArrayList<>();
+
+            for (int i = 0; i < 501; i++){
+                simulationList.add(simRectangularMap(directions));
+                simulationList.add(simGrassField(directions, 10));
+            }
+
             SimulationEngine simulationEngine = new SimulationEngine(simulationList);
 //            simulationEngine.runSync();
             simulationEngine.runAsync();

@@ -4,16 +4,14 @@ import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.IncorrectPositionException;
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Vector2d lowerLeftBound, upperRightBound;
     private final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer vis = new MapVisualizer(this);
     private final List<MapChangeListener> observers = new ArrayList<>();
+    private final UUID uuid = UUID.randomUUID();
 
     public void registerObserver(MapChangeListener observer){
         observers.add(observer);
@@ -88,5 +86,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     public String toString() {
         Boundary bound = getCurrentBounds();
         return vis.draw(bound.lowerLeft(), bound.upperRight());
+    }
+
+    @Override
+    public UUID getId(){
+        return uuid;
     }
 }

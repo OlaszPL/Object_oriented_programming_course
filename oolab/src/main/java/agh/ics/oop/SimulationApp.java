@@ -32,6 +32,7 @@ public class SimulationApp extends Application {
         map.registerObserver(presenter);
         List<MoveDirection> directions = OptionsParser.parse(getParameters().getRaw().toArray(new String[0]));
         Simulation simulation = new Simulation(List.of(new Vector2d(2,2), new Vector2d(3,4)), directions, map);
+        simulation.run();
         configureStage(primaryStage, viewRoot);
         primaryStage.show();
     }

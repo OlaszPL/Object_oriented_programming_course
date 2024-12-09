@@ -36,6 +36,11 @@ public class Simulation implements Runnable{
         for (int i = 0; i < moves.size(); i++){
             int animal_idx = i % animals.size();
             map.move(animals.get(animal_idx), moves.get(i));
+            try{
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.printf("Warning! Thread interrupted! -> %s%n", e.getMessage());
+            }
         }
     }
 }

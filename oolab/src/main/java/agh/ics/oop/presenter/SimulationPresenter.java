@@ -71,7 +71,7 @@ public class SimulationPresenter implements MapChangeListener {
         for (WorldElement element : map.getElements()){
             Vector2d pos = element.getPosition();
             Vector2d mapPos = new Vector2d(pos.getX() - boundary.lowerLeft().getX() + 1,
-                    pos.getY() - boundary.lowerLeft().getY() + 1); // może się okazać, że +1 jest zbędne
+                    pos.getY() - boundary.lowerLeft().getY() + 1);
 
             Label label = new Label(map.objectAt(pos).toString());
 

@@ -6,11 +6,16 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
             fx:controller="agh.ics.oop.presenter.SimulationPresenter">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
     <top>
         <VBox spacing="10" alignment="CENTER">
             <HBox spacing="10" alignment="CENTER">
@@ -21,9 +26,9 @@
         </VBox>
     </top>
     <center>
-        <Label fx:id="infoLabel" text="All animals will be living here!" textAlignment="CENTER"/>
+        <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"/>
     </center>
     <bottom>
-        <Label fx:id="descriptionLabel" text="Opis ruchu" textAlignment="CENTER"/>
+        <Label fx:id="descriptionLabel" text="Tutaj pojawi się opis ruchu" textAlignment="CENTER"/>
     </bottom>
 </BorderPane>

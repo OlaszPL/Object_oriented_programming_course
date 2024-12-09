@@ -39,7 +39,7 @@ public class Simulation implements Runnable{
             try{
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                System.out.printf("Warning! Thread interrupted! -> %s%n", e.getMessage());
+                System.out.printf("Thread interrupted! -> %s%n", e.getMessage());
             }
         }
     }

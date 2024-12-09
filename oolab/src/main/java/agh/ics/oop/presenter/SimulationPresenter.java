@@ -2,29 +2,84 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
-import agh.ics.oop.SimulationEngine;
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.util.Boundary;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
-    public TextField movesTextField;
-    public Label descriptionLabel;
     private WorldMap map;
     @FXML
-    private Label infoLabel;
+    public TextField movesTextField;
+    @FXML
+    public Label descriptionLabel;
+    @FXML
+    public GridPane mapGrid;
+    private static final int CELL_WIDTH = 35;
+    private static final int CELL_HEIGHT = 35;
 
     public void setWorldMap(WorldMap map){
         this.map = map;
     }
 
+    private void clearGrid() {
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().getFirst()); // hack to retain visible grid lines
+        mapGrid.getColumnConstraints().clear();
+        mapGrid.getRowConstraints().clear();
+    }
+
     public void drawMap(){
-        infoLabel.setText(map.toString());
+        clearGrid();
+        Boundary boundary = map.getCurrentBounds();
+
+        for (int x = boundary.lowerLeft().getX(); x <= boundary.upperRight().getX() + 1; x++){
+            mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
+        }
+        for (int y = boundary.lowerLeft().getY(); y <= boundary.upperRight().getY() + 1; y++){
+            mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
+        }
+
+        // dodanie oznaczeń osi
+        Label sign = new Label("y/x");
+        GridPane.setHalignment(sign, HPos.CENTER);
+        GridPane.setValignment(sign, VPos.CENTER);
+        mapGrid.add(sign , 0, 0);
+
+        for (int x = boundary.lowerLeft().getX(); x <= boundary.upperRight().getX(); x++) {
+            Label label = new Label(Integer.toString(x));
+            GridPane.setHalignment(label, HPos.CENTER);
+            GridPane.setValignment(label, VPos.CENTER);
+            mapGrid.add(label, x - boundary.lowerLeft().getX() + 1, 0);
+        }
+        for (int y = boundary.lowerLeft().getY(); y <= boundary.upperRight().getY(); y++) {
+            Label label = new Label(Integer.toString(y));
+            GridPane.setHalignment(label, HPos.CENTER);
+            GridPane.setValignment(label, VPos.CENTER);
+            mapGrid.add(label, 0, y - boundary.lowerLeft().getY() + 1);
+        }
+
+        for (WorldElement element : map.getElements()){
+            Vector2d pos = element.getPosition();
+            Vector2d mapPos = new Vector2d(pos.getX() - boundary.lowerLeft().getX() + 1,
+                    pos.getY() - boundary.lowerLeft().getY() + 1); // może się okazać, że +1 jest zbędne
+
+            Label label = new Label(map.objectAt(pos).toString());
+
+            GridPane.setHalignment(label, HPos.CENTER);
+            GridPane.setValignment(label, VPos.CENTER);
+
+            mapGrid.add(label, mapPos.getX(), mapPos.getY());
+        }
     }
 
     @Override
@@ -36,6 +91,9 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     public void onSimulationStartClicked(ActionEvent actionEvent) {
+        mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
+        mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
+
         AbstractWorldMap map = new GrassField(10);
         setWorldMap(map);
         map.registerObserver(this);
@@ -44,11 +102,9 @@ public class SimulationPresenter implements MapChangeListener {
 
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
         Simulation simulation = new Simulation(positions, directions, map);
-        SimulationEngine engine = new SimulationEngine(List.of(simulation));
 
-        // dzięki temu executorService.shutdown(); nie zamknie puli wątków, w której działa JavaFX
-        // - będą one w oddzielnych pulach
-        new Thread(engine::runAsyncInThreadPool).start();
+        // uruchamiam jedną symulację, więc użycie SimulationEngine jest zbędne
+        new Thread(simulation).start();
     }
 
 }

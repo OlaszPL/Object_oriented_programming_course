@@ -4,6 +4,8 @@ import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.RandomPositionGenerator;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap{
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
@@ -34,11 +36,8 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public List<WorldElement> getElements(){
-        List<WorldElement> list = super.getElements();
-//      kopia wartości aby nie było problemu z błędnym stanem obiektu
-        list.addAll(List.copyOf(grasses.values()));
-
-        return list;
+        return Stream.concat(super.getElements().stream(), grasses.values().stream())
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -107,6 +107,7 @@ public class SimulationPresenter implements MapChangeListener {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             System.out.printf("%s %s%n", timestamp, message);
         }));
+        map.registerObserver(new FileMapDisplay());
 
         List<MoveDirection> directions = OptionsParser.parse(movesTextField.getText().split(" "));
 

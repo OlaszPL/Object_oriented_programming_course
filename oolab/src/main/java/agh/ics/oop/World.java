@@ -17,6 +17,7 @@ public class World {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             System.out.printf("%s %s%n", timestamp, message);
         }));
+        map.registerObserver(new FileMapDisplay());
 
         return new Simulation(positions, directions, map);
     }
@@ -29,6 +30,7 @@ public class World {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             System.out.printf("%s %s%n", timestamp, message);
         }));
+        map.registerObserver(new FileMapDisplay());
 
         return new Simulation(positions, directions, map);
     }

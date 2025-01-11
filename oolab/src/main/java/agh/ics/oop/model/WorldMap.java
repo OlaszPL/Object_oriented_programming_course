@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.Boundary;
 import agh.ics.oop.model.util.IncorrectPositionException;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,4 +52,6 @@ public interface WorldMap extends MoveValidator {
     Boundary getCurrentBounds();
 
     UUID getId();
+
+    Collection<Animal> getOrderedAnimals();
 }

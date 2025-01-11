@@ -15,6 +15,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
@@ -97,6 +99,10 @@ public class SimulationPresenter implements MapChangeListener {
         AbstractWorldMap map = new GrassField(10);
         setWorldMap(map);
         map.registerObserver(this);
+        map.registerObserver(((worldMap, message) -> {
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            System.out.printf("%s %s%n", timestamp, message);
+        }));
 
         List<MoveDirection> directions = OptionsParser.parse(movesTextField.getText().split(" "));
 

@@ -92,4 +92,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     public UUID getId(){
         return uuid;
     }
+
+    @Override
+    public Collection<Animal> getOrderedAnimals(){
+        List<Animal> animalsList = new ArrayList<>(animals.values());
+        Collections.sort(animalsList, Comparator.comparing(Animal::getPosition, Comparator.comparing(Vector2d::getX)
+                .thenComparing(Vector2d::getY)));
+
+        return animalsList;
+    }
 }

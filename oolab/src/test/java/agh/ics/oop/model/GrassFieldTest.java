@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,7 +47,7 @@ class GrassFieldTest {
 
         // then
         assertDoesNotThrow(() -> map.place(animal));
-        assertEquals(animal, map.objectAt(new Vector2d(1, 2)));
+        assertEquals(Optional.of(animal), map.objectAt(new Vector2d(1, 2)));
         assertTrue(map.isOccupied(new Vector2d(1,2)));
     }
 
@@ -118,7 +119,7 @@ class GrassFieldTest {
         map.move(animal, direction);
 
         // then
-        assertEquals(animal, map.objectAt(new Vector2d(0, 4)));
+        assertEquals(Optional.of(animal), map.objectAt(new Vector2d(0, 4)));
         assertTrue(map.isOccupied(new Vector2d(0,4)));
     }
 
@@ -140,7 +141,7 @@ class GrassFieldTest {
         map.move(animal, direction);
 
         // then
-        assertEquals(animal, map.objectAt(new Vector2d(1, 1)));
+        assertEquals(Optional.of(animal), map.objectAt(new Vector2d(1, 1)));
 
     }
 
@@ -162,7 +163,7 @@ class GrassFieldTest {
         map.move(animal2, direction);
 
         // then
-        assertEquals(animal2, map.objectAt(new Vector2d(1, 0)));
+        assertEquals(Optional.of(animal2), map.objectAt(new Vector2d(1, 0)));
 
     }
 

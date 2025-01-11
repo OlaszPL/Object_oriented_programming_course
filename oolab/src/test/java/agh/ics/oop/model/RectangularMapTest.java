@@ -4,6 +4,7 @@ import agh.ics.oop.model.util.IncorrectPositionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +18,7 @@ class RectangularMapTest {
 
         // then
         assertDoesNotThrow(() -> map.place(animal));
-        assertEquals(animal, map.objectAt(new Vector2d(1, 2)));
+        assertEquals(Optional.of(animal), map.objectAt(new Vector2d(1, 2)));
         assertTrue(map.isOccupied(new Vector2d(1,2)));
     }
 
@@ -29,7 +30,7 @@ class RectangularMapTest {
 
         // then
         assertThrows(IncorrectPositionException.class, () -> map.place(animal));
-        assertNull(map.objectAt(new Vector2d(-5, 16)));
+        assertNull(map.objectAt(new Vector2d(-5, 16)).orElse(null));
         assertFalse(map.isOccupied(new Vector2d(-5, 16)));
     }
 
@@ -87,7 +88,7 @@ class RectangularMapTest {
         map.move(animal, direction);
 
         // then
-        assertEquals(animal, map.objectAt(new Vector2d(0, 4)));
+        assertEquals(Optional.of(animal), map.objectAt(new Vector2d(0, 4)));
         assertTrue(map.isOccupied(new Vector2d(0,4)));
     }
 
@@ -107,7 +108,7 @@ class RectangularMapTest {
         map.move(animal, direction);
 
         // then
-        assertEquals(animal, map.objectAt(new Vector2d(1, 1)));
+        assertEquals(Optional.of(animal), map.objectAt(new Vector2d(1, 1)));
 
     }
 
@@ -129,7 +130,7 @@ class RectangularMapTest {
         map.move(animal2, direction);
 
         // then
-        assertEquals(animal2, map.objectAt(new Vector2d(1, 0)));
+        assertEquals(Optional.of(animal2), map.objectAt(new Vector2d(1, 0)));
     }
 
     @Test

@@ -22,16 +22,16 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        WorldElement animal = super.objectAt(position);
-        if (animal != null) return animal;
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        Optional<WorldElement> animalOpt = super.objectAt(position);
+        if (animalOpt.isPresent()) return animalOpt;
 
-        return grasses.get(position);
+        return Optional.ofNullable(grasses.get(position));
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return !(objectAt(position) instanceof Animal);
+        return objectAt(position).map(element -> !(element instanceof Animal)).orElse(true);
     }
 
     @Override

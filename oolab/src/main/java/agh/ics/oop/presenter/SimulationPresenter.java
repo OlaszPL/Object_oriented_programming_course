@@ -75,7 +75,8 @@ public class SimulationPresenter implements MapChangeListener {
             Vector2d mapPos = new Vector2d(pos.getX() - boundary.lowerLeft().getX() + 1,
                     pos.getY() - boundary.lowerLeft().getY() + 1);
 
-            Label label = new Label(map.objectAt(pos).toString());
+            WorldElement object = map.objectAt(pos).orElse(null);
+            Label label = new Label(object.toString());
 
             GridPane.setHalignment(label, HPos.CENTER);
             GridPane.setValignment(label, VPos.CENTER);

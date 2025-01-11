@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,7 +45,7 @@ class SimulationTest {
             assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
                     animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(expected_positions[i]));
-            assertEquals(animals.get(i), map.objectAt(expected_positions[i]));
+            assertEquals(Optional.ofNullable(animals.get(i)), map.objectAt(expected_positions[i]));
             assertEquals(animals.get(i).getDirection(), expected_directions[i]);
         }
     }
@@ -82,7 +83,7 @@ class SimulationTest {
             assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
                     animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(positions.get(i)));
-            assertEquals(animals.get(i), map.objectAt(positions.get(i)));
+            assertEquals(Optional.ofNullable(animals.get(i)), map.objectAt(positions.get(i)));
             assertEquals(MapDirection.NORTH, animals.get(i).getDirection());
         }
     }
@@ -126,7 +127,7 @@ class SimulationTest {
             assertTrue(animals.get(i).getPosition().follows(map.getCurrentBounds().lowerLeft()) &&
                     animals.get(i).getPosition().precedes(map.getCurrentBounds().upperRight()));
             assertTrue(animals.get(i).isAt(expected_positions[i]));
-            assertEquals(animals.get(i), map.objectAt(expected_positions[i]));
+            assertEquals(Optional.ofNullable(animals.get(i)), map.objectAt(expected_positions[i]));
             assertEquals(animals.get(i).getDirection(), expected_directions[i]);
         }
     }

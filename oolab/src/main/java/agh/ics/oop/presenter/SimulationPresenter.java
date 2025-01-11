@@ -28,8 +28,8 @@ public class SimulationPresenter implements MapChangeListener {
     public Label descriptionLabel;
     @FXML
     public GridPane mapGrid;
-    private static final int CELL_WIDTH = 35;
-    private static final int CELL_HEIGHT = 35;
+    private static final int CELL_WIDTH = 40;
+    private static final int CELL_HEIGHT = 40;
 
     public void setWorldMap(WorldMap map){
         this.map = map;
@@ -79,11 +79,11 @@ public class SimulationPresenter implements MapChangeListener {
             Optional<WorldElement> objectOpt = map.objectAt(pos);
 
             if (objectOpt.isPresent()){
-                Label label = new Label(objectOpt.get().toString());
-                GridPane.setHalignment(label, HPos.CENTER);
-                GridPane.setValignment(label, VPos.CENTER);
+                WorldElementBox elementBox = new WorldElementBox(objectOpt.get());
+                GridPane.setHalignment(elementBox, HPos.CENTER);
+                GridPane.setValignment(elementBox, VPos.CENTER);
 
-                mapGrid.add(label, mapPos.getX(), mapPos.getY());
+                mapGrid.add(elementBox, mapPos.getX(), mapPos.getY());
             }
         }
     }

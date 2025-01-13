@@ -2,6 +2,8 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,11 @@ public class World {
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(100, 100));
         RectangularMap map = new RectangularMap(5, 5);
         map.registerObserver(new ConsoleMapDisplay());
+        map.registerObserver(((worldMap, message) -> {
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            System.out.printf("%s %s%n", timestamp, message);
+        }));
+        map.registerObserver(new FileMapDisplay());
 
         return new Simulation(positions, directions, map);
     }
@@ -19,6 +26,11 @@ public class World {
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
         GrassField map = new GrassField(grassFieldsNo);
         map.registerObserver(new ConsoleMapDisplay());
+        map.registerObserver(((worldMap, message) -> {
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            System.out.printf("%s %s%n", timestamp, message);
+        }));
+        map.registerObserver(new FileMapDisplay());
 
         return new Simulation(positions, directions, map);
     }

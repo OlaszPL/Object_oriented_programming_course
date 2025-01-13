@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
 public class Animal implements WorldElement {
+    private static final String[] IMG_NAMES = {"up.png", "down.png", "left.png", "right.png"};
     private MapDirection direction = MapDirection.NORTH;
     private Vector2d position;
 
@@ -15,6 +16,16 @@ public class Animal implements WorldElement {
     @Override
     public String toString() {
         return direction.toString();
+    }
+
+    @Override
+    public String getElementImgName() {
+        return switch (direction){
+            case NORTH -> IMG_NAMES[0];
+            case SOUTH -> IMG_NAMES[1];
+            case WEST -> IMG_NAMES[2];
+            case EAST -> IMG_NAMES[3];
+        };
     }
 
     public boolean isAt(Vector2d position){

@@ -15,7 +15,10 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 public class SimulationPresenter implements MapChangeListener {
     private WorldMap map;
@@ -25,8 +28,8 @@ public class SimulationPresenter implements MapChangeListener {
     public Label descriptionLabel;
     @FXML
     public GridPane mapGrid;
-    private static final int CELL_WIDTH = 35;
-    private static final int CELL_HEIGHT = 35;
+    private static final int CELL_WIDTH = 40;
+    private static final int CELL_HEIGHT = 40;
 
     public void setWorldMap(WorldMap map){
         this.map = map;
@@ -73,12 +76,15 @@ public class SimulationPresenter implements MapChangeListener {
             Vector2d mapPos = new Vector2d(pos.getX() - boundary.lowerLeft().getX() + 1,
                     pos.getY() - boundary.lowerLeft().getY() + 1);
 
-            Label label = new Label(map.objectAt(pos).toString());
+            Optional<WorldElement> objectOpt = map.objectAt(pos);
 
-            GridPane.setHalignment(label, HPos.CENTER);
-            GridPane.setValignment(label, VPos.CENTER);
+            if (objectOpt.isPresent()){
+                WorldElementBox elementBox = new WorldElementBox(objectOpt.get());
+                GridPane.setHalignment(elementBox, HPos.CENTER);
+                GridPane.setValignment(elementBox, VPos.CENTER);
 
-            mapGrid.add(label, mapPos.getX(), mapPos.getY());
+                mapGrid.add(elementBox, mapPos.getX(), mapPos.getY());
+            }
         }
     }
 
@@ -97,6 +103,11 @@ public class SimulationPresenter implements MapChangeListener {
         AbstractWorldMap map = new GrassField(10);
         setWorldMap(map);
         map.registerObserver(this);
+        map.registerObserver(((worldMap, message) -> {
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            System.out.printf("%s %s%n", timestamp, message);
+        }));
+        map.registerObserver(new FileMapDisplay());
 
         List<MoveDirection> directions = OptionsParser.parse(movesTextField.getText().split(" "));
 

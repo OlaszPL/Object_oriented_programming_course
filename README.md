@@ -18,6 +18,7 @@ This repository consists of solutions to the tasks from the Object Oriented Prog
 | Lab 8      | lab8        | [lab8](https://github.com/OlaszPL/Object_oriented_programming_course/tree/lab8) |
 | Proj Lab 1 | proj-lab1   | [proj-lab1](https://github.com/OlaszPL/Object_oriented_programming_course/tree/proj-lab1) |
 
+You can find the solutions to Git exercises in the [git-report](https://github.com/OlaszPL/Object_oriented_programming_course/tree/main/git-report) directory.
 
 ## License
 

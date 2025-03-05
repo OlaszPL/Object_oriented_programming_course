@@ -1,6 +1,6 @@
 # Object Oriented Programming Course - AGH University of Krakow (2024/25)
 
-This repository consists of solutions to the tasks from the Object Oriented Programming course at AGH University of Krakow 2024/25. The instructions for the tasks can be found [here](https://github.com/Soamid/obiektowe-lab) (in Polish).
+This repository consists of solutions to the tasks from the Object Oriented Programming course at AGH University of Krakow 2024/25. The instructions for the tasks can be found [here](https://github.com/OlaszPL/Object_oriented_programming_course/tree/main/Labs) (in Polish).
 
 ## Branches
 
